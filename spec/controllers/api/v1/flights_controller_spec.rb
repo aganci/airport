@@ -45,6 +45,12 @@ RSpec.describe Api::V1::FlightsController do
         expect(parsed_body[0]['start_datetime']).to eq('2020-02-01T10:30:00.000Z')
         expect(parsed_body[0]['end_datetime']).to eq('2020-02-01T18:30:00.000Z')
       end
+
+      it "should render errors given invalid params" do
+        invalid = find_params
+        invalid[:find_params][:from_airport] = ''
+        
+      end
     end
   end
 end

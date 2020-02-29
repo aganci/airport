@@ -1,7 +1,13 @@
 class FindFlight
   prepend SimpleCommand
 
-  def call from_airport, to_airport, date
-    []
+  def initialize(from_airport, to_airport, date)
+    @from_airport = from_airport
+    @to_airport = to_airport
+    @date = date
+  end
+
+  def call
+    Flight.all
   end
 end
