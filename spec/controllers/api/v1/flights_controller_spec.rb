@@ -12,9 +12,7 @@ RSpec.describe Api::V1::FlightsController do
 
     context 'authenticated' do
       before do
-        user = create(:user)
-        command = AuthenticateUser.new(user.email, user.password).call
-        request.headers.merge!({'Authorization': "Bearer #{command.result}"})
+        api_sign_in
       end
 
       it 'should list flights' do
