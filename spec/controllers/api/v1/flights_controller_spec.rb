@@ -15,7 +15,12 @@ RSpec.describe Api::V1::FlightsController do
         api_sign_in
       end
 
-      let(:flight) { build(:flight) }
+      let(:flight) { build(:flight, 
+        from_airport: 'MXP', to_airport: 'DUB', 
+        start_datetime: DateTime.new(2020, 2, 1, 10, 30),
+        end_datetime: DateTime.new(2020, 2, 1, 18, 30))
+      }
+
       let(:find_params) {
         {
           find_params: {
@@ -34,6 +39,10 @@ RSpec.describe Api::V1::FlightsController do
 
         parsed_body = JSON.parse(response.body)
         expect(parsed_body.size).to eq(1)
+        expect(parsed_body[0]['from_airport']).to eq('MXP')
+        expect(parsed_body[0]['to_airport']).to eq('DUB')
+        expect(parsed_body[0]['start_datetime']).to eq('2020-02-01T10:30:00.000Z')
+        expect(parsed_body[0]['end_datetime']).to eq('2020-02-01T18:30:00.000Z')
       end
     end
   end
