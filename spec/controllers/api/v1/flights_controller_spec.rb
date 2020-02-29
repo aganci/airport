@@ -21,14 +21,14 @@ RSpec.describe Api::V1::FlightsController do
           find_params: {
             from_airport: 'MXP',
             to_airport: 'DUB',
-            date: Date.new(2020, 2, 1)
+            date: '2020-02-01'
           }
         }
       }
 
       it 'should list found flights' do
         command = FakeCommand.new [flight]
-        allow(FindFlight).to receive(:call).and_return(command)
+        allow(FindFlight).to receive(:call).with('MXP', 'DUB', Date.new(2020, 2, 1)).and_return(command)
 
         get :find, params: find_params, format: :json
 
