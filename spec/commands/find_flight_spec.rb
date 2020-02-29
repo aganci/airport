@@ -20,6 +20,12 @@ RSpec.describe FindFlight do
 
         expect(context.result).to be_empty
       end
+
+      it 'should return empty result given an invalid to_airport' do
+        flight = create(:flight, from_airport: from_airport, to_airport: 'JFK', start_datetime: DateTime.new(2020, 2, 1, 15, 30))
+
+        expect(context.result).to be_empty
+      end
     end
   end
 end

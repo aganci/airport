@@ -8,6 +8,6 @@ class FindFlight
   end
 
   def call
-    Flight.where(from_airport: @from_airport)
+    Flight.where(from_airport: @from_airport).where(to_airport: @to_airport)
   end
 end
