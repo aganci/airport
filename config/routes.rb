@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+  
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :flights, only: [] do
@@ -7,6 +8,8 @@ Rails.application.routes.draw do
           get :find
         end
       end
+
+      post :authenticate, to: 'authentication#authenticate'
     end
   end
 end
