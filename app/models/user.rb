@@ -5,6 +5,6 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   def authenticate password
-    true
+    valid_password?(password)
   end
 end
