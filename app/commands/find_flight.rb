@@ -8,6 +8,10 @@ class FindFlight
   end
 
   def call
-    Flight.where(from_airport: @from_airport).where(to_airport: @to_airport)
+    Flight
+      .where(from_airport: @from_airport)
+      .where(to_airport: @to_airport)
+      .where('start_datetime >= ?', @date.to_date)
+      .where('start_datetime < ?', @date.to_date + 1.day)
   end
 end
