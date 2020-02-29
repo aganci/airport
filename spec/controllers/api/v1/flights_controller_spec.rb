@@ -38,6 +38,7 @@ RSpec.describe Api::V1::FlightsController do
         get :find, params: find_params, format: :json
 
         parsed_body = JSON.parse(response.body)
+        
         expect(parsed_body.size).to eq(1)
         expect(parsed_body[0]['from_airport']).to eq('MXP')
         expect(parsed_body[0]['to_airport']).to eq('DUB')
