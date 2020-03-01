@@ -11,7 +11,7 @@ class Api::V1::FlightsController < Api::ApplicationController
 
   def book
     command = BookFlight.call(params[:id].to_i, passenger_params.to_hash.symbolize_keys)
-    render json: {}.to_json, status: :ok
+    render json: {passender_id: command.result.id}.to_json, status: :ok
   end
 
   private

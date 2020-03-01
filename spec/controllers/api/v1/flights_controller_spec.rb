@@ -96,12 +96,14 @@ RSpec.describe Api::V1::FlightsController do
       end
 
       it 'should use book command to book a flight' do
-        command = FakeCommand.new
+        command = FakeCommand.new(Passenger.new(id: 123))
         expect(BookFlight).to receive(:call).with(1, passenger_params).and_return(command)
 
         post :book, params: { id: 1, passenger: passenger_params }, format: :json
 
         expect(response.status).to be(200)
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['passender_id']).to eq(123)
       end
     end    
   end
