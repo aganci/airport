@@ -47,9 +47,16 @@ RSpec.describe Api::V1::FlightsController do
       end
 
       it "should render errors given invalid params" do
-        invalid = find_params
-        invalid[:find_params][:from_airport] = ''
-        
+        command = FakeCommand.new
+        command.set_error(:message, 'an error')
+
+        allow(FindFlight).to receive(:call).and_return(command)
+
+        get :find, params: find_params, format: :json
+
+        expect(response.status).to eq(400)
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['error']['message']).to eq('an error')
       end
     end
   end

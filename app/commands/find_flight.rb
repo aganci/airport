@@ -9,7 +9,7 @@ class FindFlight
 
   def call
     if @from_airport.blank?
-      errors.add(:base, 'from_airport cannot be blank')
+      errors.add(:message, 'from_airport cannot be blank')
       return
     end
 
