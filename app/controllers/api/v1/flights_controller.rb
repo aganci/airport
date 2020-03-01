@@ -5,13 +5,17 @@ class Api::V1::FlightsController < Api::ApplicationController
     if command.success?    
       render json: command.result.to_json(only: [:id, :from_airport, :to_airport, :start_datetime, :end_datetime]), status: :ok
     else
-      render json: {error: command.errors}.to_json, status: :bad_request
+      render_errors command
     end
   end
 
   def book
     command = BookFlight.call(params[:id].to_i, passenger_params.to_hash.symbolize_keys)
-    render json: {passender_id: command.result.id}.to_json, status: :ok
+    if command.success?
+      render json: {passender_id: command.result.id}.to_json, status: :ok
+    else
+      render_errors command
+    end
   end
 
   private
@@ -21,5 +25,9 @@ class Api::V1::FlightsController < Api::ApplicationController
 
     def passenger_params
       params.require(:passenger).permit(:name, :address, :city, :country)
+    end
+
+    def render_errors command
+      render json: {error: command.errors}.to_json, status: :bad_request
     end
 end

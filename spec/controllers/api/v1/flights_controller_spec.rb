@@ -105,6 +105,20 @@ RSpec.describe Api::V1::FlightsController do
         parsed_body = JSON.parse(response.body)
         expect(parsed_body['passender_id']).to eq(123)
       end
+
+      it "should render errors given invalid params" do
+        command = FakeCommand.new
+        command.set_error(:message, 'an error')
+
+        allow(BookFlight).to receive(:call).and_return(command)
+
+        post :book, params: { id: 1, passenger: passenger_params }, format: :json
+
+        expect(response.status).to eq(400)
+        parsed_body = JSON.parse(response.body)
+        expect(parsed_body['error']['message']).to eq('an error')
+      end
+      
     end    
   end
 end
