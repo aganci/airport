@@ -7,8 +7,18 @@ class BookFlight
   end
 
   def call
-    Passenger.new(@passenger_params.merge(flight_id: @flight_id)).tap do |p|
-      p.save!
+    flight = Flight.find_by_id(@flight_id)
+    if flight.nil?
+      errors.add(:message, 'Flight not found')
+      return
+    end
+
+    passenger = Passenger.new(@passenger_params.merge(flight: flight))
+    if passenger.valid?
+      passenger.save!
+      passenger
+    else
+      errors.add(passenger.errors)
     end
   end
 end
