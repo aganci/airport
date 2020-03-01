@@ -13,6 +13,16 @@ class FindFlight
       return
     end
 
+    if @to_airport.blank?
+      errors.add(:message, 'to_airport cannot be blank')
+      return
+    end
+
+    if @date.nil?
+      errors.add(:message, 'date cannot be blank')
+      return
+    end
+
     Flight
       .where(from_airport: @from_airport)
       .where(to_airport: @to_airport)

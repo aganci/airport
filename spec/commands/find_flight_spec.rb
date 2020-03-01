@@ -41,6 +41,23 @@ RSpec.describe FindFlight do
           expect(context).to be_failure
         end
       end
+
+      describe 'invalid to_airport' do
+        let(:to_airport) { '' }
+
+        it 'fails' do
+          expect(context).to be_failure
+        end
+      end
+
+      describe 'invalid date' do
+        let(:date) { nil }
+
+        it 'fails' do
+          expect(context).to be_failure
+        end
+      end
+
     end
   end
 end
