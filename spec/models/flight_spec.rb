@@ -1,12 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe Flight, type: :model do
-  let(:start_datetime) { 1.month.from_now }
-  let(:end_datetime) { start_datetime + 3.hours }
-  let(:flight) { described_class.new(from_airport: 'MXP', to_airport: 'DUB', start_datetime: start_datetime, end_datetime: end_datetime) }
+  let(:flight) { build(:flight) }
 
   it "should validate from_airport" do
     flight.from_airport = nil
+
+    expect(flight).to_not be_valid
+  end
+
+  it "should validate to_airport" do
+    flight.to_airport = nil
+
+    expect(flight).to_not be_valid
+  end
+
+  it "should validate start_datetime" do
+    flight.start_datetime = nil
+
+    expect(flight).to_not be_valid
+  end
+
+  it "should validate end_datetime" do
+    flight.end_datetime = nil
+
+    expect(flight).to_not be_valid
+  end
+
+  it "should validate that start_datetime must be older than end_datetime" do
+    flight.start_datetime = DateTime.new(2020, 2, 1, 10, 20)
+    flight.end_datetime = DateTime.new(2020, 2, 1, 10, 10)
 
     expect(flight).to_not be_valid
   end
