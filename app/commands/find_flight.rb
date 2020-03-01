@@ -8,6 +8,11 @@ class FindFlight
   end
 
   def call
+    if @from_airport.blank?
+      errors.add(:base, 'from_airport cannot be blank')
+      return
+    end
+
     Flight
       .where(from_airport: @from_airport)
       .where(to_airport: @to_airport)
