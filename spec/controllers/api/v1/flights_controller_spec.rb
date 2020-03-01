@@ -80,5 +80,29 @@ RSpec.describe Api::V1::FlightsController do
         expect(response.status).to be(401)
       end
     end
+
+    context 'authenticated' do
+      let(:passenger_params) {
+        {
+          name: 'Mario Rossi',
+          address: 'Via Milano, 6',
+          city: 'Milano',
+          country: 'Italia'
+        }
+      }
+
+      before do
+        api_sign_in
+      end
+
+      it 'should use book command to book a flight' do
+        command = FakeCommand.new
+        expect(BookFlight).to receive(:call).with(1, passenger_params).and_return(command)
+
+        post :book, params: { id: 1, passenger: passenger_params }, format: :json
+
+        expect(response.status).to be(200)
+      end
+    end    
   end
 end

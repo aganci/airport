@@ -10,10 +10,16 @@ class Api::V1::FlightsController < Api::ApplicationController
   end
 
   def book
+    command = BookFlight.call(params[:id].to_i, passenger_params.to_hash.symbolize_keys)
+    render json: {}.to_json, status: :ok
   end
 
   private
     def find_params
       params.require(:find_params).permit(:from_airport, :to_airport, :date)
+    end
+
+    def passenger_params
+      params.require(:passenger).permit(:name, :address, :city, :country)
     end
 end
