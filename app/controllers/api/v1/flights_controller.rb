@@ -3,7 +3,7 @@ class Api::V1::FlightsController < Api::ApplicationController
     command = FindFlight.call(find_params[:from_airport], find_params[:to_airport], find_params[:date].to_date)
     
     if command.success?    
-      render json: command.result.to_json(only: [:from_airport, :to_airport, :start_datetime, :end_datetime]), status: :ok
+      render json: command.result.to_json(only: [:id, :from_airport, :to_airport, :start_datetime, :end_datetime]), status: :ok
     else
       render json: {error: command.errors}.to_json, status: :bad_request
     end

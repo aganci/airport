@@ -54,7 +54,7 @@ RSpec.describe Api::V1::FlightsController do
 
         parsed_body = JSON.parse(response.body)
         
-        expect(parsed_body[0].keys).to eq(["from_airport", "to_airport", "start_datetime", "end_datetime"])
+        expect(parsed_body[0].keys).to eq(["id", "from_airport", "to_airport", "start_datetime", "end_datetime"])
       end
 
       it "should render errors given invalid params" do
