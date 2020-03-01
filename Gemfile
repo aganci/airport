@@ -35,6 +35,9 @@ gem 'activeadmin'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Note that rspec-rails 4.0 is still a beta release
+  gem 'rspec-rails', '~> 4.0.0.beta'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -46,9 +49,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-# Run against the latest stable release
-group :development, :test do
-  # Note that rspec-rails 4.0 is still a beta release
-  gem 'rspec-rails', '~> 4.0.0.beta'
-  gem 'factory_bot_rails'
+group :test do
+  gem 'faker'
 end
