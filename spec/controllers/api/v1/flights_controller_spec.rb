@@ -46,6 +46,17 @@ RSpec.describe Api::V1::FlightsController do
         expect(parsed_body[0]['end_datetime']).to eq('2020-02-01T18:30:00.000Z')
       end
 
+      it 'should not show all model fields' do
+        command = FakeCommand.new [flight]
+        allow(FindFlight).to receive(:call).with('MXP', 'DUB', Date.new(2020, 2, 1)).and_return(command)
+
+        get :find, params: find_params, format: :json
+
+        parsed_body = JSON.parse(response.body)
+        
+        expect(parsed_body[0].keys).to eq(["from_airport", "to_airport", "start_datetime", "end_datetime"])
+      end
+
       it "should render errors given invalid params" do
         command = FakeCommand.new
         command.set_error(:message, 'an error')
