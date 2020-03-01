@@ -9,6 +9,9 @@ class Api::V1::FlightsController < Api::ApplicationController
     end
   end
 
+  def book
+  end
+
   private
     def find_params
       params.require(:find_params).permit(:from_airport, :to_airport, :date)

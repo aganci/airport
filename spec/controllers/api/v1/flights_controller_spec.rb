@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Api::V1::FlightsController do
   describe 'GET api/v1/flights' do
     context 'not authenticated' do
-      it 'should list flights' do
+      it 'should not permit unauthenticated requests' do
         get :find, format: :json
 
         expect(response.status).to be(401)
@@ -68,6 +68,16 @@ RSpec.describe Api::V1::FlightsController do
         expect(response.status).to eq(400)
         parsed_body = JSON.parse(response.body)
         expect(parsed_body['error']['message']).to eq('an error')
+      end
+    end
+  end
+
+  describe 'POST api/v1/flights/:id/book' do
+    context 'not authenticated' do
+      it 'should not permit unauthenticated requests' do
+        post :book, params: { id: 1 }, format: :json
+
+        expect(response.status).to be(401)
       end
     end
   end

@@ -9,6 +9,9 @@ Rails.application.routes.draw do
         collection do
           get :find
         end
+        member do
+          post :book
+        end
       end
 
       post :authenticate, to: 'authentication#authenticate'
